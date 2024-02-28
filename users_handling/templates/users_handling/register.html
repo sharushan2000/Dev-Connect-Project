@@ -6,7 +6,7 @@
 
 
   
-<section class="vh-100 bg-image"
+  <section class="vh-100 bg-image"
   style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
@@ -27,6 +27,11 @@
                             <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
 
                         {{ form.email }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
                         </div>
                     
                         <div class="form-outline mb-4">
