@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import RegisterForm
 from django.contrib import messages
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def login(request):
@@ -23,3 +25,9 @@ def signup(request):
     
     # This return statement will handle both new (GET) requests and invalid (POST) submissions
     return render(request, 'users_handling/register.html', {'form': form})
+
+
+@login_required
+def logout_view(request):
+    logout(request) # This will log out the user
+    return redirect('home:home') # Redirect to the home page

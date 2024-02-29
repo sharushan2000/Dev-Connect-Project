@@ -134,3 +134,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     
 ]
+# # Directory where static files will be collected to
+# STATIC_ROOT = '/var/www/example.com/static/'
+
+
+LOGIN_REDIRECT_URL = 'home:home'
+# url to redirect to after login
+
