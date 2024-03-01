@@ -129,15 +129,22 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+
+LOGIN_REDIRECT_URL = 'home:home'
+# url to redirect to after login
+
+LOGIN_URL = 'users_handling:login' # url to redirext if the user is not logged in
+
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     
 ]
 # # Directory where static files will be collected to
-# STATIC_ROOT = '/var/www/example.com/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
-
-LOGIN_REDIRECT_URL = 'home:home'
-# url to redirect to after login
+MEDIA_URL = '/media/' # This is the url that will be used to access the media files
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')# This is the directory where the media files will be stored
 

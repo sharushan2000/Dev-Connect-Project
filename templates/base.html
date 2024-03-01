@@ -34,7 +34,7 @@
                         <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Welcome {{ user.username }}</a>
+                        <a class="nav-link" href="{% url 'users_handling:profile' username=user.username %}">Welcome {{ user.username }}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">

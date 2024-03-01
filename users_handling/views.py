@@ -31,3 +31,6 @@ def signup(request):
 def logout_view(request):
     logout(request) # This will log out the user
     return redirect('home:home') # Redirect to the home page
+
+def profile(request,username):
+    return render(request ,'users_handling/user_profile.html' ,{}) # This will render the profile page
