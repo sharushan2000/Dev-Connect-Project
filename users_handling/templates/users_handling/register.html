@@ -2,72 +2,82 @@
 
 
 {% block body %}
+
 <body>
 
 
-  
+
   <section class="vh-100 bg-image"
-  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-                    <form method="post" >
-                        {% csrf_token %}
-                        <div class="form-outline mb-4">
-                        <label class="form-label" for="{{ form.username.id_for_label }}">Your Name</label>
+    style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">Your Name</label>
 
-                        {{ form.username }}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
+                    {{ form.username }}
+                  </div>
 
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            {% for error in form.email.errors %}
-                                <p style="color: red;">{{ error }}</p>
-                            {% endfor %}
-                        {% endif %}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
 
-                        {{ form.password1 }}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.password2.id_for_label }}">Repeat your password</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.first_name.id_for_label }}">firstname</label>
 
-                        {{ form.password2 }}
-                        </div>
-                    
-                        <!-- Add any additional fields here -->
+                    {{ form.first_name }}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.last_name.id_for_label }}">lastname</label>
+
+                    {{ form.last_name }}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+
+                    {{ form.password1 }}
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">confirm password</label>
+
+                    {{ form.password2 }}
+                  </div>
+
+                  <!-- Add any additional fields here -->
 
 
-                    <div class="d-flex justify-content-center">
+                  <div class="d-flex justify-content-center">
                     <button type="submit"
-                        class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                    </div>
+                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                  </div>
 
-                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                        class="fw-bold text-body"><u>Login here</u></a></p>
+                  <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
+                      class="fw-bold text-body"><u>Login here</u></a></p>
 
-                    </form>
-                
+                </form>
 
-                </div>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  </body>
-  
-  
-  {% endblock %}
+</body>
+
+
+{% endblock %}

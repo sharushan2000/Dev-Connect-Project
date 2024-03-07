@@ -9,11 +9,12 @@
 <body>
     <h1>User Profile</h1>
     <div>
-        <img src="{{ user.userprofile.profile_pic.url }}" alt="Profile Picture">
-        <h2>John Doe</h2>
-        <p>Email: johndoe@example.com</p>
-        <p>Location: New York, USA</p>
-        <p>Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <img src="{{ user.userprofile.profile_pic.url }}" alt="Profile Picture" width="50" height="50">
+        <h2>{{my.username}}</h2>
+        <p>{{my.email}}</p>
+        <p>{{my.first_name}}</p>
+        <p>{{my.last_name}}</p>
+
     </div>
 </body>
 </html>

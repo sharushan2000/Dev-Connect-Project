@@ -2,67 +2,77 @@
 
 
 {% block body %}
+
 <body>
 
 
-  
-<section class="vh-100 bg-image"
-  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-                    <form method="post" >
-                        {% csrf_token %}
-                        <div class="form-outline mb-4">
-                        <label class="form-label" for="{{ form.username.id_for_label }}">Your Name</label>
 
-                        {{ form.username }}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
+  <section class="vh-100 bg-image"
+    style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">Your Name</label>
 
-                        {{ form.email }}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+                    {{ form.username }}
+                  </div>
 
-                        {{ form.password1 }}
-                        </div>
-                    
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="{{ form.password2.id_for_label }}">Repeat your password</label>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
 
-                        {{ form.password2 }}
-                        </div>
-                    
-                        <!-- Add any additional fields here -->
+                    {{ form.email }}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.firstname.id_for_label }}">First Name</label>
+
+                    {{ form.firstname }}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.lastname.id_for_label }}">Last Name</label>
+
+                    {{ form.lastname }}
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+
+                    {{ form.password1 }}
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm password</label>
+
+                    {{ form.password2 }}
+                  </div>
+
+                  <!-- Add any additional fields here -->
 
 
-                    <div class="d-flex justify-content-center">
+                  <div class="d-flex justify-content-center">
                     <button type="submit"
-                        class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                    </div>
+                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                  </div>
 
-                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                        class="fw-bold text-body"><u>Login here</u></a></p>
+                  <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
+                      class="fw-bold text-body"><u>Login here</u></a></p>
 
-                    </form>
-                
+                </form>
 
-                </div>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  </body>
-  
-  
-  {% endblock %}
+</body>
+
+
+{% endblock %}
