@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    .profile-header {
+        margin-bottom: 2rem;
+    }
+    .profile-header h2 {
+        margin-bottom: 0.5rem;
+    }
+    .profile-buttons {
+        margin-bottom: 1rem;
+    }
+    .profile-buttons a {
+        text-decoration: none;
+    }
+    .resume-section h3 {
+        margin-top: 2rem;
+    }
+    .resume-item {
+        margin-bottom: 1rem;
+    }
+    .resume-item h4 {
+        margin-bottom: 0.5rem;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: flex-end; /* Aligns children (the container) to the right */
+        min-height: 100vh; /* Optional: Makes the flex container fill the viewport height */
+    }
+</style>
+
+
+
+
+<div class="container py-4">
+    <div class="profile shadow-sm p-3 mb-5 bg-body rounded">
+        <!-- Profile header -->
+        <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="profile-header">
+                    <h2>{{ profile.username }}</h2>
+                </div>
+                <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if follow %}
+                        <button type="submit" class="btn btn-success" name="isfollow" value="follow">Follow</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-danger" name="isfollow" value="unfollow">Unfollow</button>
+                    {% endif %}
+                </form>
+                </div>
+                
+            </div>
+            <div class="col-8">
+                <div class="profile-buttons">
+                    <a href="{% url 'users_handling:following_list' id=profile.id %}" class="btn btn-primary">75 Following</a>
+                    <a href="{% url 'users_handling:followers_list' id=profile.id %}" class="btn btn-primary">75 Followers</a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        </div>
+
+
+        <!-- Resume details -->
+        <div class="resume-section">
+            <h3>About Me</h3>
+            <p>I am a professional with over 10 years of experience in the tech industry. Passionate about building scalable web applications and leading engineering teams to success.</p>
+            <h3>Experience</h3>
+            <!-- Experience items -->
+            <div class="resume-item">
+                <h4>Senior Software Engineer</h4>
+                <p>Company ABC - January 2016 - Present</p>
+                <ul>
+                    <li>Lead the development of multiple high-traffic web applications.</li>
+                    <li>Implemented modern development practices to increase team efficiency by 40%.</li>
+                </ul>
+            </div>
+            <div class="resume-item">
+                <h4>Software Engineer</h4>
+                <p>Company XYZ - August 2010 - December 2015</p>
+                <ul>
+                    <li>Developed and maintained web applications in a fast-paced agile environment.</li>
+                    <li>Contributed to open source projects and engaged with the developer community.</li>
+                </ul>
+            </div>
+            <h3>Education</h3>
+            <p>Bachelor's in Computer Science - University of Technology</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+{% endblock %}

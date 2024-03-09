@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User List</h1>
+        <ul class="list-group">
+            {% for following_user in user.userprofile.follows.all %}
+                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}"><li class="list-group-item">{{ following_user.user.username }}</li></a>
+
+            {% endfor %}
+
+            <li class="list-group-item">User 1</li>
+            <li class="list-group-item">User 2</li>
+            <li class="list-group-item">User 3</li>
+            <!-- Add more list items for each user -->
+        </ul>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
