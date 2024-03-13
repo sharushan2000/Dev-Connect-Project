@@ -5,8 +5,15 @@
 
 <div class="container py-3 ">
     <div class="row justify-content-center">
+        {% if user.is_authenticated %}
+        <script>
+            window.location.href = "{% url 'home:home' %}";
+        </script>
+
+        {% else %}
         <div class="card text-center" style="width: 30rem;">
             <div class="card-body  justify-content-center ">
+
                 <h5 class="card-title">Login</h5>
                 <form method="POST">
                     {% csrf_token %}
@@ -67,6 +74,8 @@
                 </form>
             </div>
         </div>
+        {% endif %}
+
     </div>
 </div>
 

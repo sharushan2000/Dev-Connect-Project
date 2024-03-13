@@ -1,0 +1,31 @@
+{% extends 'base.html ' %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center">Connect with Developers</h2>
+                <p class="text-center">Browse and connect with developers</p>
+                <div class="container mt-3">
+                    {% for profile in profile_list %}
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ profile.pic }}" class="img-fluid rounded-start" alt="Profile Picture">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
+                                        <p class="card-text">{{ profile.bio }}</p>
+                                        <button type="button" class="btn btn-primary">Follow</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+
+{% endblock %}
+```
