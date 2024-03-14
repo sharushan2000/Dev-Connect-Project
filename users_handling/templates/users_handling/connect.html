@@ -2,30 +2,53 @@
 
 
 {% block body %}
+<header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h2 class="text-center">Connect with Developers</h2>
-                <p class="text-center">Browse and connect with developers</p>
-                <div class="container mt-3">
-                    {% for profile in profile_list %}
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="{{ profile.pic }}" class="img-fluid rounded-start" alt="Profile Picture">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
-                                        <p class="card-text">{{ profile.bio }}</p>
-                                        <button type="button" class="btn btn-primary">Follow</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+        <div class="text-center">
+            <h1>Discover New Horizons</h1>
+            <p class="lead">Explore trending topics, inspiring content, and connect with creators.</p>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="mb-4">
+        <h2 class="mb-3">Trending Now</h2>
+        <div id="trendingCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="your-image-url-here.jpg" class="d-block w-100" alt="...">
                 </div>
-                
+                <!-- Add more carousel items here -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#trendingCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#trendingCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="mb-3">Recommended For You</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card">
+                    <img src="your-image-url-here.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Content Title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more cards here -->
+        </div>
+    </section>
+</main>
 
 {% endblock %}
 ```

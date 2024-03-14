@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,69 +8,102 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    body {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .navbar-custom {
+        background-color: #343a40;
+        /* Dark theme for navbar */
+    }
+
+    footer {
+        background-color: #343a40;
+        color: white;
+        padding: 10px 0;
+    }
+
+    .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 24px;
+    }
+
+    .carousel-item {
+        height: 85vh;
+        color: white;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style>
+
 <body>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">DevConnect</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{% url 'home:home' %}">DevConnect</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link btn btn-dark" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link btn btn-dark" href="{% url 'users_handling:connect'%}">Explore</a>
+            </li>
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">Projects</a>
+            </li> -->
+
+        </ul>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'users_handling:connect'%}">Connect</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Projects</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                {% if user.is_authenticated %}
 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'users_handling:myprofile' username=user.username %}">Welcome {{ user.username }}</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
-                    </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link btn btn-dark" href="{% url 'users_handling:myprofile' username=user.username %}">
+                        {{ user.username }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link btn btn-dark" href="{% url 'users_handling:logout' %}">Logout</a>
+                </li>
                 {% else %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
-                    </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
+    {% block body %}
 
-{% block body %}
+    {% endblock %}
 
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="social-icons">
+            <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com"><i class="fab fa-github"></i></a>
+        </div>
+        <p>DevConnect © 2024. All Rights Reserved.</p>
+    </footer>
 
-{% endblock %}
-
-
-
-
-
-
-   <!-- Footer -->
-   <footer class="text-muted">
-    <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
-        <p>DevConnect © Your Website 2024</p>
-    </div>
-</footer>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

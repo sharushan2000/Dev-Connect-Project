@@ -4,21 +4,43 @@
     <title>User List</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .flex-container {
+            display: flex;
+            flex-direction: column; /* Adjust this as needed; options: row, row-reverse, column, column-reverse */
+            align-items: center; /* Center the items horizontally */
+            justify-content: center; /* Center the items vertically */
+            gap: 10px; /* Adjust the space between items */
+        }
+
+        .flex-item {
+            width: 100%; /* Adjust this as needed */
+        }
+
+        @media (min-width: 768px) {
+            .flex-container {
+                flex-direction: row; /* Adjust layout for larger screens */
+                flex-wrap: wrap; /* Allow items to wrap as needed */
+            }
+            .flex-item {
+                width: calc(33.333% - 20px); /* Adjust this as needed, subtracting the gap */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>User List</h1>
-        <ul class="list-group">
+        <div class="flex-container">
             {% for following_user in user.userprofile.follows.all %}
-                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}"><li class="list-group-item">{{ following_user.user.username }}</li></a>
-
+                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}" class="list-group-item flex-item">{{ following_user.user.username }}</a>
             {% endfor %}
-
-            <li class="list-group-item">User 1</li>
-            <li class="list-group-item">User 2</li>
-            <li class="list-group-item">User 3</li>
+            <!-- Static items for demonstration -->
+            <!-- <div class="list-group-item flex-item">User 1</div>
+            <div class="list-group-item flex-item">User 2</div>
+            <div class="list-group-item flex-item">User 3</div> -->
             <!-- Add more list items for each user -->
-        </ul>
+        </div>
     </div>
 
     <!-- Include Bootstrap JS -->

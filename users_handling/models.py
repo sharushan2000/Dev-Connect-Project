@@ -37,14 +37,28 @@ class Project(models.Model): # This is the model for the project
     git_url = models.URLField(blank=True)
     linkdedin_url = models.URLField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    collobrators = models.ManyToManyField(User, related_name='collobrators_for', blank=True)
+    collaborators = models.ManyToManyField(User, related_name='collobrators_for', blank=True)
     #likes = models.ManyToManyField(User, related_name='likes_by', blank=True)
     # dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
 
     def __str__(self):
         return self.title + self.user.username
     
+class Education(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_education')
+    degree = models.CharField(max_length=100)
+    school = models.CharField(max_length=100)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    description = models.TextField(blank=True , null=True)
 
+    class Meta:
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return self.user.username + " " + self.degree + " " + self.school
+    
+    
 #create profile when user created
 def create_profile(sender,instance,created,**kwargs):
     if created:

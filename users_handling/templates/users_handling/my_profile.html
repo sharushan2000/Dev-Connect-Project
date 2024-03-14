@@ -74,7 +74,7 @@
     }
 </style>
 
-<div class="container">
+<div class="container jumbotron ">
     <div class="profile shadow-sm p-3 mb-5 bg-body rounded col-sm">
         <div class="profile-header">
             <h2>{{ my.username }}</h2>
@@ -146,8 +146,46 @@
                     <li>Contributed to open source projects and engaged with the developer community.</li>
                 </ul>
             </div>
-            <h3>Education</h3>
-            <p>Bachelor's in Computer Science - University of Technology</p>
+            <div class="container card-header">
+                <div class="education-section">
+                    <div class="row mb-4">
+                        <div class="col">
+                            <h3>Education</h3>
+                            <a href="{% url 'users_handling:education_history' %}" class="btn btn-primary">Add
+                                Education</a>
+                        </div>
+                        <div class="col text-end">
+                           
+                        </div>
+                    </div>
+
+                    {% for education in history_of_education %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    {{ education.degree }}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ education.school }}</h5>
+                                    <p class="card-text">{{ education.description }}</p>
+                                    <p class="card-text"><small class="text-muted">{{ education.start_date }} - {{
+                                            education.end_date }}</small></p>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="row">
+                        <div class="col">
+                            <p>No education found.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
 
             <div class="projects-section">
                 <h3>My Projects</h3>
@@ -163,6 +201,10 @@
                             <!-- Update Project Link -->
                             <a href="{%url 'users_handling:update_project' id=project.id %}"
                                 class="btn btn-sm btn-outline-secondary float-right ml-2">Update</a>
+                            <!-- Delete Project Link -->
+                            <a href="{%url 'users_handling:delete_project' id=project.id %}"
+                                class="btn btn-sm btn-outline-danger float-right">Delete</a>
+                            
                         </h5>
                     </div>
                     <div id="collapse{{ project.id }}" class="collapse" aria-labelledby="heading{{ project.id }}"

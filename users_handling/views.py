@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile,ContactInformation ,Project
+from .models import UserProfile,ContactInformation ,Project ,Education
 from django.contrib.auth.models import User
-from .forms import RegisterForm , ContactInformationForm ,ProjectForm
+from .forms import RegisterForm , ContactInformationForm ,ProjectForm,EducationForm
 
 # build in login
 
@@ -47,7 +47,11 @@ def myprofile(request, username):
     my_username = request.user.username
     id = request.user.id
     my_contact = None
+    education_history = None
     value =True
+
+    if hasattr(request.user ,'users_education'):
+        education_history = request.user.users_education.all()
     if username != my_username:
         redirect('home:home')
     if hasattr(request.user, 'contactinformation'):
@@ -65,7 +69,8 @@ def myprofile(request, username):
     return render(request, 'users_handling/my_profile.html', {'my': my ,
                                                                 'value':value, 
                                                                 'my_contact': my_contact,
-                                                                'my_projects': my_projects})
+                                                                'my_projects': my_projects,
+                                                                'history_of_education':education_history})
 
 
 @login_required
@@ -93,19 +98,21 @@ def update_contact(request):
 
 @login_required
 def add_project(request):
-    form = ProjectForm()
     if request.method == "POST":
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
-            project.user= request.user
-            project.colloborators.add(request.user)
-            project.save()
+            project.user = request.user  # Set the project's owner to the current user
+            project.save()  # Save the project to generate an ID for M2M relationship
+            project.collaborators.add(request.user)  # Add the user as a collaborator
+            project.save()  # Save the project again, now with collaborators
             return redirect('users_handling:myprofile', request.user.username)
+    else:
+        form = ProjectForm()  # Provide an empty form for GET request
 
-   
     return render(request, 'users_handling/add_project.html', {'form': form})
-    
+
+@login_required
 def update_project(request,id):
     
     project = Project.objects.get(id=id)
@@ -118,13 +125,68 @@ def update_project(request,id):
     else:
         return redirect('home:home')
 
+@login_required  
+def delete_project(request,id):
+    project = Project.objects.get(id=id)
+    if project in request.user.projects_created.all():
+        project.delete()
+        return redirect('users_handling:myprofile', request.user.username)
+    else:
+        return redirect('home:home')
 
+@login_required
+def add_education(request):
+
+    if request.method == "POST":
+        form = EducationForm(request.POST)
+        if form.is_valid():
+            education = form.save(commit=False)
+            education.user = request.user
+            education.save()
+            return redirect('users_handling:myprofile', request.user.username)
+    else:
+        form = EducationForm()
+    return render(request, 'users_handling/add_education.html', {'form': form})
+
+@login_required
+def education_history(request):
+    history_of_education = request.user.users_education.all()
+    return render(request, 'users_handling/education_history.html', {'history_of_education': history_of_education})
+
+@login_required
+def update_education(request,id):
+    education = Education.objects.get(id=id)
+    if education in request.user.users_education.all():
+
+        form = EducationForm(request.POST or None , instance=education)
+        if form.is_valid():
+            form.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        return render(request, 'users_handling/update_education.html', {'form': form,'education':education})
+    
+    else:
+        return redirect('home:home')
+
+@login_required
+def delete_education(request,id):
+    education = Education.objects.get(id=id)
+    if education in request.user.users_education.all():
+        education.delete()
+        return redirect('users_handling:education_history')
+    else:
+        return redirect('home:home')
 
 
 @login_required
 def showprofile(request, id, username):
     # print(username)
     profile = User.objects.get(id=id)
+    contact = None
+    projects = None
+    if hasattr(profile,'contactinformation'):
+        contact = profile.contactinformation
+    if hasattr(profile, 'projects_created'):
+        projects = profile.projects_created.all()
 
     # print(profile.userprofile)
     # print(request.user.userprofile.follows.all())
@@ -150,7 +212,11 @@ def showprofile(request, id, username):
         follow = True
 
     # This will render the profile page
-    return render(request, 'users_handling/other_user.html', {'profile': profile, 'name': username, 'follow': follow})
+    return render(request, 'users_handling/user_profile.html', {'profile': profile, 
+                                                                'name': username, 
+                                                                'follow': follow, 
+                                                                'contact': contact
+                                                                ,'user_projects': projects})
 
 
 @login_required

@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import ContactInformation ,Project
+from .models import ContactInformation ,Project , Education
 
 
 class RegisterForm(UserCreationForm):
@@ -59,4 +59,25 @@ class ProjectForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'git_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Github URL'}),
+        }
+
+
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['degree', 'school', 'start_date', 'end_date', 'description']
+        labels = {
+            'degree': '',
+            'school': '',
+            'start_date': '',
+            'end_date': '',
+            'description': ''
+        }
+        widgets = {
+            'degree':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Degree/Course Name/Field of Study/Diploma/Training/Bootcamp/Workshop/Online Course/Other'}),
+            'school': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'School/College/University/Institute'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date' ,"placeholder": 'Start Date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date',"placeholder": 'End Date'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
         }
