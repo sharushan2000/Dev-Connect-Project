@@ -23,6 +23,7 @@ class ContactInformation(models.Model): # This is the model for the contact info
     phone = models.CharField(max_length=15 , blank=True)
     address = models.CharField(max_length=100 , blank=True)
     city = models.CharField(max_length=50 ,blank=True)
+    zip = models.IntegerField(blank=True ,null=True)
     state = models.CharField(max_length=50 ,blank=True)
     country = models.CharField(max_length=50 ,blank=True)
 
@@ -30,18 +31,19 @@ class ContactInformation(models.Model): # This is the model for the contact info
         return self.user.username + " contact information"
 
 class Project(models.Model): # This is the model for the project
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects_created') 
     title = models.CharField(max_length=100)
     description = models.TextField()
     git_url = models.URLField(blank=True)
-    date = models.DateField()
-    likes = models.ManyToManyField(User, related_name='likes_by', blank=True)
+    linkdedin_url = models.URLField(blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    collobrators = models.ManyToManyField(User, related_name='collobrators_for', blank=True)
+    #likes = models.ManyToManyField(User, related_name='likes_by', blank=True)
     # dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
 
     def __str__(self):
         return self.title + self.user.username
     
-
 
 #create profile when user created
 def create_profile(sender,instance,created,**kwargs):

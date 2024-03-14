@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
-from .forms import RegisterForm
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile,ContactInformation
+from .models import UserProfile,ContactInformation ,Project
 from django.contrib.auth.models import User
+from .forms import RegisterForm , ContactInformationForm ,ProjectForm
+
 # build in login
 
 
 def login(request):
     return render(request, 'users_handling/login.html', {})
+
 
 
 def register(request):
@@ -50,12 +52,73 @@ def myprofile(request, username):
         redirect('home:home')
     if hasattr(request.user, 'contactinformation'):
         my_contact = request.user.contactinformation
-    print(my_contact)
+    # print(my_contact)
     if my_contact is None:
         value = False
+
+    if hasattr(request.user, 'projects_created'):
+        my_projects = request.user.projects_created.all()
+        print(my_projects)
+
     my = User.objects.get(id=id)
     # This will render the profile page
-    return render(request, 'users_handling/user_profile.html', {'my': my ,'value':value, 'my_contact': my_contact})
+    return render(request, 'users_handling/my_profile.html', {'my': my ,
+                                                                'value':value, 
+                                                                'my_contact': my_contact,
+                                                                'my_projects': my_projects})
+
+
+@login_required
+def edit_contact(request):
+    if request.method == "POST":
+        form = ContactInformationForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
+            return redirect('users_handling:myprofile', request.user.username)
+    else:
+        form = ContactInformationForm()
+    return render(request, 'users_handling/edit_contact.html', {'form': form})
+
+@login_required
+def update_contact(request):
+
+    contact = request.user.contactinformation
+    form = ContactInformationForm(request.POST or None , instance=contact)
+    if form.is_valid():
+        form.save()
+        return redirect('users_handling:myprofile', request.user.username)
+    return render(request, 'users_handling/update_contact.html', {'form': form,'contact':contact})
+
+@login_required
+def add_project(request):
+    form = ProjectForm()
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.user= request.user
+            project.colloborators.add(request.user)
+            project.save()
+            return redirect('users_handling:myprofile', request.user.username)
+
+   
+    return render(request, 'users_handling/add_project.html', {'form': form})
+    
+def update_project(request,id):
+    
+    project = Project.objects.get(id=id)
+    if project in request.user.projects_created.all():
+        form = ProjectForm(request.POST or None , instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        return render(request, 'users_handling/update_project.html', {'form': form,'project':project})
+    else:
+        return redirect('home:home')
+
+
 
 
 @login_required
@@ -98,7 +161,7 @@ def following_list(request, id):
     # This will render the profile page
     return render(request, 'users_handling/following_list.html', {'user': user})
 
-
+@login_required
 def followers_list(request, id):
     user = User.objects.get(id=id)
 

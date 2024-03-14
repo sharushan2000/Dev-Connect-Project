@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    .container {
+        max-width: 1000px;
+        /* Adjust container width for better focus */
+        margin-top: 20px;
+    }
+
+    .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-header h2 {
+        margin: 0;
+        padding: 0;
+        color: #333;
+        /* Darker text for better readability */
+    }
+
+    .button-group button {
+        margin-right: 10px;
+    }
+
+    .button-group a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .resume-section h3 {
+        color: #007bff;
+        /* Bootstrap primary color for headings */
+        margin-top: 20px;
+    }
+
+    .resume-section p,
+    .resume-section ul {
+        color: #555;
+        /* Slightly lighter text for better readability */
+    }
+
+    .resume-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .resume-section ul li::before {
+        content: "•";
+        color: #007bff;
+        /* Bootstrap primary color for bullet points */
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+
+    }
+
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* Add shadow for better depth */
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+</style>
+
+<div class="container">
+    <div class="profile shadow-sm p-3 mb-5 bg-body rounded col-sm">
+        <div class="profile-header">
+            <h2>{{ my.username }}</h2>
+            <div class="button-group">
+                <button class="btn btn-primary"><a href="{% url 'users_handling:following_list' id=user.id %}">75
+                        Following</a></button>
+                <button class="btn btn-info"><a href="{% url 'users_handling:followers_list' id=user.id %}">75
+                        Followers</a></button>
+            </div>
+        </div>
+        {% if value %}
+        <div class="resume-section">
+            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                Show Contact Details
+            </button>
+
+            <br>
+
+            <div class="card">
+
+                <div class="collapse" id="collapseExample">
+
+                    <div class="card card-body">
+
+                        <h5 class="card-title">
+                            Contact Detail
+                            <a href="{% url 'users_handling:update_contact' %}"
+                                class="btn btn-primary float-right">update Contact</a>
+                        </h5>
+                        <div class="clearfix"></div> <!-- Clears floating elements -->
+
+                        <p class="card-text">Email: {{ my_contact.email }}</p>
+                        <p class="card-text">Phone: {{ my_contact.phone }}</p>
+                        <p class="card-text">Address: {{ my_contact.address }}</p>
+                        <p class="card-text">City: {{ my_contact.city }}</p>
+                        <p class="card-text">Country: {{ my_contact.country }}</p>
+                        <p class="card-text">Zip: {{ my_contact.zip }}</p>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            {% else %}
+            <h1>You have no contact detail</h1>
+            <a href="{% url 'users_handling:edit_contact' %}">Complete your profile by adding contact</a>
+            {% endif %}
+        </div>
+        <div class="resume-section">
+            <h3>About Me</h3>
+            <p>I am a professional with over 10 years of experience in the tech industry. Passionate about building
+                scalable web applications and leading engineering teams to success.</p>
+            <h3>Experience</h3>
+            <div class="mb-3">
+                <h4>Senior Software Engineer</h4>
+                <p>Company ABC - January 2016 - Present</p>
+                <ul>
+                    <li>Lead the development of multiple high-traffic web applications.</li>
+                    <li>Implemented modern development practices to increase team efficiency by 40%.</li>
+                </ul>
+            </div>
+            <div class="mb-3">
+                <h4>Software Engineer</h4>
+                <p>Company XYZ - August 2010 - December 2015</p>
+                <ul>
+                    <li>Developed and maintained web applications in a fast-paced agile environment.</li>
+                    <li>Contributed to open source projects and engaged with the developer community.</li>
+                </ul>
+            </div>
+            <h3>Education</h3>
+            <p>Bachelor's in Computer Science - University of Technology</p>
+
+            <div class="projects-section">
+                <h3>My Projects</h3>
+                {% for project in my_projects %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse{{ project.id }}" aria-expanded="false"
+                                aria-controls="collapse{{ project.id }}">
+                                {{ project.title }}
+                            </button>
+                            <!-- Update Project Link -->
+                            <a href="{%url 'users_handling:update_project' id=project.id %}"
+                                class="btn btn-sm btn-outline-secondary float-right ml-2">Update</a>
+                        </h5>
+                    </div>
+                    <div id="collapse{{ project.id }}" class="collapse" aria-labelledby="heading{{ project.id }}"
+                        data-parent=".projects-section">
+                        <div class="card-body">
+                            <!-- Project details here -->
+                            <a href="{{ project.git_url }}">
+                                <p><strong>Github: {{ project.git_url }}</strong></p>
+                            </a>
+                            <p><strong>{{ project.description }}</strong></p>
+
+                            <small class="text-muted">Contributed BY:</small>
+                            {% for collobrator in project.collobrators.all %}
+                            <small class="text-muted">{{ collobrator.username }},</small>
+
+
+                            {% endfor %}
+
+
+                            <p><small class="text-muted">Created on: {{ project.created_on }}</small></p>
+                            <!-- Include other project details as needed -->
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No projects found.</p>
+                {% endfor %}
+
+                <!-- Link to add a new project -->
+                <a href="{%url 'users_handling:add_project' %}" class="btn btn-primary mt-3">Add Project</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+{% endblock %}
