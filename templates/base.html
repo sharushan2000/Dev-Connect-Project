@@ -7,98 +7,148 @@
     <title>Developer Connect</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <style>
     body {
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 
-    .navbar-custom {
-        background-color: #343a40;
-        /* Dark theme for navbar */
-    }
-
-    footer {
-        background-color: #343a40;
-        color: white;
-        padding: 10px 0;
-    }
-
-    .social-icons a {
-        color: white;
-        margin: 0 10px;
-        font-size: 24px;
-    }
-
-    .carousel-item {
-        height: 85vh;
-        color: white;
-        background-size: cover;
-        background-position: center;
-    }
-
-    .carousel-caption {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 20px;
+    .card {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
     }
+
+    .navbar-brand:hover {
+        text-decoration: underline;
+    }
+
+    .nav-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Custom styles for a more modern look */
+    .carousel-item img {
+        height: 500px;
+        /* Adjust based on your preference */
+        object-fit: cover;
+        /* Ensures images cover the area well */
+    }
+
+    .card {
+        transition: transform .3s;
+        /* Animation for hover effect */
+        border: none;
+        /* Removes the border */
+        border-radius: 0.5rem;
+        /* Rounded corners for the cards */
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+        /* Slight zoom effect on hover */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        /* Shadow effect for depth */
+    }
+
+    h2 {
+        font-weight: 600;
+        /* Makes headings bolder */
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black;
+        /* Makes the arrows more visible */
+    }
+
+    .news-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .news-card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        /* Ensure images cover nicely */
+    }
+
+    .news-content {
+        padding: 15px;
+    }
+
+    .news-title {
+        margin-top: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .news-text {
+        font-size: 14px;
+        margin: 10px 0;
+    }
+
+    .btn-outline-primary {
+        margin-top: 10px;
+    }
 </style>
+</head>
 
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand mx-2" href="{% url 'home:home' %}">DevConnect</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link btn btn-dark" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link btn btn-dark" href="{% url 'explore:explore_home' %}">Explore</a>
+        </li>
+        <!-- <li class="nav-item active">
+            <a class="nav-link" href="#">Projects</a>
+        </li> -->
 
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'home:home' %}">DevConnect</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    </ul>
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link btn btn-dark" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link btn btn-dark" href="{% url 'users_handling:connect'%}">Explore</a>
-            </li>
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="#">Projects</a>
-            </li> -->
 
+            {% if user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link btn btn-dark" href="{% url 'users_handling:myprofile' username=user.username %}">
+                    {{ user.username }}</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link btn btn-dark" href="{% url 'users_handling:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
+            </li>
+            {% endif %}
         </ul>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-
-                {% if user.is_authenticated %}
-                <li class="nav-item active">
-                    <a class="nav-link btn btn-dark" href="{% url 'users_handling:myprofile' username=user.username %}">
-                        {{ user.username }}</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link btn btn-dark" href="{% url 'users_handling:logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    </div>
+</nav>
 
     {% block body %}
 
     {% endblock %}
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="social-icons">
-            <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
-            <a href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://github.com"><i class="fab fa-github"></i></a>
-        </div>
-        <p>DevConnect © 2024. All Rights Reserved.</p>
-    </footer>
+
+    {% block footer %}
+
+
+    {% endblock %}
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

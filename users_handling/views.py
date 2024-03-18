@@ -234,9 +234,4 @@ def followers_list(request, id):
     # This will render the profile page
     return render(request, 'users_handling/followers_list.html', {'user': user})
 
-@login_required
-def connect(request):
-    profile_list = UserProfile.objects.filter(public=True).exclude(user=request.user)
-    print(profile_list)
-
-    return render(request, 'users_handling/connect.html', {"profile_list": profile_list})
+# This is the end of the views.py file

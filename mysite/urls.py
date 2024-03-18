@@ -26,5 +26,6 @@ urlpatterns = [
     path('' ,views.home ,name ="secondary_home"),
     path('home/',include('home.urls')),
     path('users/',include('users_handling.urls')),
+    path('explore/',include('explore.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -28,16 +28,21 @@
                     <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
 
                     {{ form.email }}
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
                   </div>
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.firstname.id_for_label }}">First Name</label>
+                    <label class="form-label" for="{{ form.first_name.id_for_label }}">firstname</label>
 
-                    {{ form.firstname }}
+                    {{ form.first_name }}
                   </div>
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.lastname.id_for_label }}">Last Name</label>
+                    <label class="form-label" for="{{ form.last_name.id_for_label }}">lastname</label>
 
-                    {{ form.lastname }}
+                    {{ form.last_name }}
                   </div>
                   <div class="form-outline mb-4">
                     <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
@@ -46,7 +51,7 @@
                   </div>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm password</label>
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">confirm password</label>
 
                     {{ form.password2 }}
                   </div>

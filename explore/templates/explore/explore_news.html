@@ -1,0 +1,72 @@
+{% extends 'explore_base.html' %}
+{% load static %}
+
+{% block explore %}
+<main class="container py-4">
+    <section class="mb-4">
+        <h2 class="mb-3">Trending Now</h2>
+        <div id="trendingCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/code.jpg' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Latest in Code</h5>
+                        <p>Discover the newest trends in coding and development.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/programmer.jpg' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Innovative Minds</h5>
+                        <p>Meet the programmers shaping the future of technology.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/team.jpg' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Team Collaboration</h5>
+                        <p>Learn how teams across the globe collaborate to create solutions.</p>
+                    </div>
+                </div>
+                
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#trendingCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#trendingCarousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+
+    <section class="mb-5">
+        <h2 class="mb-4 text-center">Recommended For You</h2>
+        <div class="container">
+            <div class="row">
+                {% for article in articles %}
+                <!-- Article 1 -->
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="news-card">
+                        <img src="{{ article.urlToImage }}"  class="news-image" alt="...">
+                        <div class="news-content">
+                            <h5 class="news-title">{{article.title}}</h5>
+                            <p class="news-text">{{ article.description | truncatewords:20 }}</p>
+                            <a a href="{{ article.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No articles available</p>
+                {% endfor %}
+                <!-- Repeat for other articles -->
+                
+
+    </section>
+
+</main>
+{% endblock %}

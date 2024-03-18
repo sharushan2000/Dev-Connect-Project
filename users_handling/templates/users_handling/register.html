@@ -1,83 +1,208 @@
 {% extends 'base.html' %}
 
-
 {% block body %}
 
-<body>
+<style>
+  /* Ensure elements don't extend beyond the viewport width */
+  .form-control, .form-horizontal .row {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .form-horizontal .row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .form-horizontal label {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  /* Container background to match the theme */
+  .container {
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 
+  /* Card Styling */
+  .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
+  .card-body {
+    background-color: #ffffff;
+    padding: 20px;
+  }
 
-  <section class="vh-100 bg-image"
-    style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-      <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-            <div class="card" style="border-radius: 15px;">
-              <div class="card-body p-5">
-                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-                <form method="post">
-                  {% csrf_token %}
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.username.id_for_label }}">Your Name</label>
+  /* Form Inputs and Labels */
+  .form-control, .form-control:focus {
+    border-color: #ced4da;
+    background-color: #e9ecef;
+    color: #495057;
+  }
 
-                    {{ form.username }}
-                  </div>
+  .form-control::placeholder { /* Placeholder text color */
+    color: #6c757d;
+  }
 
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.email.id_for_label }}">Your Email</label>
+  .form-label {
+    color: #343a40;
+    margin-bottom: 0.5rem;
+  }
 
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                    {% for error in form.email.errors %}
-                    <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                    {% endif %}
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.first_name.id_for_label }}">firstname</label>
+  /* Button Styling */
+  .btn-primary {
+    background-color: #343a40; /* Dark shade for the button */
+    border: none;
+  }
 
-                    {{ form.first_name }}
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.last_name.id_for_label }}">lastname</label>
+  .btn-primary:hover {
+    background-color: #23272b;
+  }
 
-                    {{ form.last_name }}
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+  /* Link Styling */
+  a, a:visited {
+    color: #495057;
+  }
 
-                    {{ form.password1 }}
-                  </div>
+  a:hover, a:focus {
+    color: #343a40;
+  }
 
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="{{ form.password2.id_for_label }}">confirm password</label>
+  /* Error Message Styling */
+  .invalid-feedback {
+    color: #dc3545;
+  }
+  
+  /* Small text and helper text */
+  .form-text {
+    color: #6c757d;
+  }
+  .form-control.gray-shade {
+    background-color: #e9ecef; /* Light gray background */
+    border: 1px solid #ced4da; /* Slightly darker border for definition */
+    color: #495057; /* Dark text for contrast */
+}
 
-                    {{ form.password2 }}
-                  </div>
+/* Ensure the styles apply correctly */
+.form-control.gray-shade:focus {
+    background-color: #e9ecef;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: none;
+}
+</style>
 
-                  <!-- Add any additional fields here -->
+<div class="container mt-5 jumbo">
+  <div class="card mx-auto" style="width: auto; max-width: 100%;">
+    <div class="card-body">
+      <h3 class="card-title mb-4">Sign Up</h3>
 
+      <form method="post" class="form-horizontal">
+        {% csrf_token %}
 
-                  <div class="d-flex justify-content-center">
-                    <button type="submit"
-                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                  </div>
-
-                  <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                      class="fw-bold text-body"><u>Login here</u></a></p>
-
-                </form>
-
-
-              </div>
-            </div>
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.username.id_for_label }}" class="col-form-label col-sm-3">Username</label>
+          <div class="col-sm-9">
+            {{ form.username }}
+            {% if form.username.help_text %}
+            <small class="form-text text-muted">{{ form.username.help_text }}</small>
+            {% endif %}
+            {% if form.username.errors %}
+            {% for error in form.username.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-</body>
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.email.id_for_label }}" class="col-form-label col-sm-3">Email</label>
+          <div class="col-sm-9">
+            {{ form.email }}
+            {% if form.email.help_text %}
+            <small class="form-text text-muted">{{ form.email.help_text }}</small>
+            {% endif %}
+            {% if form.email.errors %}
+            {% for error in form.email.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.first_name.id_for_label }}" class="col-form-label col-sm-3">First Name</label>
+          <div class="col-sm-9">
+            {{ form.first_name }}
+            {% if form.first_name.help_text %}
+            <small class="form-text text-muted">{{ form.first_name.help_text }}</small>
+            {% endif %}
+            {% if form.first_name.errors %}
+            {% for error in form.first_name.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.last_name.id_for_label }}" class="col-form-label col-sm-3">Last Name</label>
+          <div class="col-sm-9">
+            {{ form.last_name }}
+            {% if form.last_name.help_text %}
+            <small class="form-text text-muted">{{ form.last_name.help_text }}</small>
+            {% endif %}
+            {% if form.last_name.errors %}
+            {% for error in form.last_name.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.password1.id_for_label }}" class="col-form-label col-sm-3">Password</label>
+          <div class="col-sm-9">
+            {{ form.password1 }}
+            {% if form.password1.help_text %}
+            <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+            {% endif %}
+            {% if form.password1.errors %}
+            {% for error in form.password1.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.password2.id_for_label }}" class="col-form-label col-sm-3">Confirm Password</label>
+          <div class="col-sm-9">
+            {{ form.password2 }}
+            {% if form.password2.help_text %}
+            <small class="form-text text-muted">{{ form.password2.help_text }}</small>
+            {% endif %}
+            {% if form.password2.errors %}
+            {% for error in form.password2.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        
 
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-lg">Register</button>
+        </div>
+
+        <p class="text-center text-muted mt-5 mb-0">Already have an account? <a href="{% url 'users_handling:login' %}" class="fw-bold text-body"><u>Login here</u></a></p>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
