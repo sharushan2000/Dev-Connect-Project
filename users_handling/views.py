@@ -48,7 +48,7 @@ def myprofile(request, username):
     id = request.user.id
     my_contact = None
     education_history = None
-    value =True
+  
 
     if hasattr(request.user ,'users_education'):
         education_history = request.user.users_education.all()
@@ -57,17 +57,14 @@ def myprofile(request, username):
     if hasattr(request.user, 'contactinformation'):
         my_contact = request.user.contactinformation
     # print(my_contact)
-    if my_contact is None:
-        value = False
 
     if hasattr(request.user, 'projects_created'):
         my_projects = request.user.projects_created.all()
-        print(my_projects)
+        # print(my_projects)
 
     my = User.objects.get(id=id)
     # This will render the profile page
-    return render(request, 'users_handling/my_profile.html', {'my': my ,
-                                                                'value':value, 
+    return render(request, 'users_handling/my_resume.html', {'my': my ,
                                                                 'my_contact': my_contact,
                                                                 'my_projects': my_projects,
                                                                 'history_of_education':education_history})

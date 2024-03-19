@@ -1,0 +1,363 @@
+{% load static %}
+<html>
+<!DOCTYPE html>
+
+
+<head>
+    <title>My Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet1.css' %}">
+    <!-- END: ed8c6549bwf9 -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+
+    <div class="container ">
+        <div class="left_side">
+            <div class="profileText">
+                <div class="imgBx">
+                    <img src="{% static 'images/img.png' %}">
+                </div>
+                <h2> {{user.first_name}} {{user.last_name}} <br><span>{{user.username}}</span></h2>
+            </div>
+            <!-- ------------------------ Contact Informations--------------------- -->
+            {% if my_contact %}
+            <div class="contactInfo">
+                <h3 class="title">Contact Info <a href="{% url 'users_handling:update_contact' %}" class="btn btn-dark">
+                        Edit Contact </a></h3>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="{{my_contact.github}}" style="text-decoration: none; "><span class="icon"><i
+                                        class="fa fa-github" aria-hidden="true"></i></span>
+                                <span class="text"> Github </span></a>
+                        </li>
+                        <li>
+                            <span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                            <span class="text"> {{my_contact.email}} </span>
+
+                        </li>
+                        <li>
+                            <a href="{{my_contact.website}}" style="text-decoration: none; "><span class="icon"><i
+                                        class="fa fa-link" aria-hidden="true"></i></span>
+                                <span class="text"> Website </span></a>
+                        </li>
+                        <li>
+                            <a href="{{my_contact.linkedin}}" style="text-decoration: none; "><span class="icon"><i
+                                        class="fa fa-linkedin" aria-hidden="true"></i></span>
+                                <span class="text"> LinkedIn </span></a>
+                        </li>
+                        <li>
+                            <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                            <span class="text"> {{my_contact.phone}} </span>
+                        </li>
+
+                        <li>
+                            <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
+                            <muted> <span class="text"> {{my_contact.address}} ,</span></muted>
+                            <muted> <span class="text"> {{my_contact.city}}, </span></muted>
+                            <muted> <span class="text"> {{my_contact.country}}, </span></muted>
+                            <muted> <span class="text"> {{my_contact.zip}} </span></muted>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% else %}
+
+            <div class="contactInfo">
+                <h3 class="title">Contact Info</h3>
+                <a href="{% url 'users_handling:edit_contact' %}" class="btn btn-dark">Complete your profile by adding
+                    contact</a>
+                <ul>
+                    <li>
+                        <a><span class="icon"><i class="fa fa-github" aria-hidden="true"></i></span>
+                            <span class="text"> Github </span></a>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                        <span class="text"> Email </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                        <span class="text"> Website </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-linkedin" aria-hidden="true"></i></span>
+                        <span class="text"> LinkedIn </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                        <span class="text"> Phone number </span>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- ------------------------ Education Informations--------------------- -->
+
+            {% if history_of_education %}
+            <div class="contactInfo education">
+                <h3 class="title">education <a href="{% url 'users_handling:add_education' %}" class="btn btn-dark"> Add
+                        education </a>
+                </h3>
+
+
+                <ul>
+                    {% for education in history_of_education %}
+                    <li>
+                        <h5>
+                            <a href="{% url 'users_handling:update_education' education.id %}"
+                                style="text-decoration: none; ">{{education.school}}</a>
+                        </h5>
+                        <h6> {{education.start_date}} - {{education.end_date}}</h6>
+                        <h6>{{education.degree}}</h6>
+
+
+                        {% endfor %}
+                </ul>
+
+            </div>
+
+            {%else%}
+
+            <div class="contactInfo education">
+                <h3 class="title">education</h3>
+                <a href="{% url 'users_handling:add_education' %}" class="btn btn-dark"> Add education </a>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- Profession skill  -->
+            <div class="aboutSkills">
+                <h2 class="title2">Professional skills</h2>
+                <div class="skills">
+                    <ul>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JAVASCRIPT</li>
+                        <li>C++</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contactInfo languages">
+                <h3 class="title">Languages</h3>
+                <ul>
+                    <li>
+                        <span class="text">Spanish</span>
+                        <span class="percent">
+                            <div style="width: 100%;"></div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="text">English</span>
+                        <span class="percent">
+                            <div style="width: 99%;"></div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="text">French</span>
+                        <span class="percent">
+                            <div style="width: 75%;"></div>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right_side">
+            <!----dont mix the sides up---->
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand mx-2" href="{% url 'home:home' %}">DevConnect</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Middle Navigation Links -->
+                    <ul class="navbar-nav mx-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link btn-dark btn-outline-secondary"
+                                href="{% url 'users_handling:following_list' id=user.id %}">Followers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-dark "
+                                href="{% url 'users_handling:followers_list' id=user.id %}">Following</a>
+                        </li>
+                    </ul>
+                    <!-- Theme Toggle and Authentication Links -->
+
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <div class="about">
+                <h2 class="title2">About</h2>
+                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quod sunt dignissimos ex sed?
+                    Repellendus, corporis et nulla blanditiis vel animi, officia accusantium similique consequatur
+                    voluptate sit alias iure neque!</p>
+            </div>
+            <div class="about">
+                <h2 class="title2">experience</h2>
+                <div class="box">
+                    <div class="year_company">
+                        <h5>Company name 1 </h5>
+                        <h6>Jan 2020 - Jan 2020<h6>
+                    </div>
+                    <div class="text">
+                        <h4>Job title 1</h4>
+                        <ul>
+                            <li>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
+                                omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="year_company">
+                        <h5>Company name 2 </h5>
+                        <h6>Jan 2020 - Jan 2020</h6>
+                    </div>
+                    <div class="text">
+                        <h4>Job title 2</h4>
+                        <ul>
+                            <li>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
+                                omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="year_company">
+                        <h5>Company name 3 </h5>
+                        <h6>Jan 2020 - Jan 2020</h6>
+                    </div>
+                    <div class="text">
+                        <h4>Job title 3</h4>
+                        <ul>
+                            <li>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
+                                omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                            <li>
+                                elit. Necessitatibus, inventore quod omnis accusantium vel.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about interest">
+                <div class="projects-section">
+                    <h3>My Projects</h3>
+                    {% for project in my_projects %}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapse{{ project.id }}" aria-expanded="false"
+                                    aria-controls="collapse{{ project.id }}">
+                                    {{ project.title }}
+                                </button>
+                                <!-- Update Project Link -->
+                                <a href="{%url 'users_handling:update_project' id=project.id %}"
+                                    class="btn btn-sm btn-outline-secondary float-right ml-2">Update</a>
+                                <!-- Delete Project Link -->
+                                <a href="{%url 'users_handling:delete_project' id=project.id %}"
+                                    class="btn btn-sm btn-outline-danger float-right">Delete</a>
+
+                            </h5>
+                        </div>
+                        <div id="collapse{{ project.id }}" class="collapse" aria-labelledby="heading{{ project.id }}"
+                            data-parent=".projects-section">
+                            <div class="card-body">
+                                <!-- Project details here -->
+                                <a href="{{ project.git_url }}">
+                                    <p><strong>Github: {{ project.git_url }}</strong></p>
+                                </a>
+                                <p><strong>{{ project.description }}</strong></p>
+
+                                <small class="text-muted">Contributed BY:</small>
+                                {% for collobrator in project.collobrators.all %}
+                                <small class="text-muted">{{ collobrator.username }},</small>
+
+
+                                {% endfor %}
+
+
+                                <p><small class="text-muted">Created on: {{ project.created_on }}</small></p>
+                                <!-- Include other project details as needed -->
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No projects found.</p>
+                    {% endfor %}
+
+                    <!-- Link to add a new project -->
+                    <a href="{%url 'users_handling:add_project' %}" class="btn btn-primary mt-3">Add Project</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!----end of right container-->
+    </div>
+    <!----whole container div-->
+    </div>
+</body>
+
+</html>

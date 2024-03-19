@@ -4,156 +4,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Connect</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Explore - Social Media</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-</head>
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
 
-    .card {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-    }
+    <style>
+        :root {
+            --background-color-light: #ffffff;
+            --text-color-light: #000000;
+            --background-color-dark: #343a40;
+            /* Bootstrap dark bg color */
+            --text-color-dark: #ffffff;
+        }
 
-    .navbar-brand:hover {
-        text-decoration: underline;
-    }
+        body {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
 
-    .nav-link:hover {
-        text-decoration: underline;
-    }
+        .dark-theme {
+            --background-color-light: #343a40;
+            /* For dark theme, swap the variables */
+            --text-color-light: #ffffff;
+        }
 
-    /* Custom styles for a more modern look */
-    .carousel-item img {
-        height: 500px;
-        /* Adjust based on your preference */
-        object-fit: cover;
-        /* Ensures images cover the area well */
-    }
 
-    .card {
-        transition: transform .3s;
-        /* Animation for hover effect */
-        border: none;
-        /* Removes the border */
-        border-radius: 0.5rem;
-        /* Rounded corners for the cards */
-    }
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
 
-    .card:hover {
-        transform: scale(1.03);
-        /* Slight zoom effect on hover */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-        /* Shadow effect for depth */
-    }
+        nav ul li {
+            margin-right: 20px;
+        }
 
-    h2 {
-        font-weight: 600;
-        /* Makes headings bolder */
-    }
+        button {
+            cursor: pointer;
+        }
 
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        background-color: black;
-        /* Makes the arrows more visible */
-    }
 
-    .news-card {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        overflow: hidden;
-        transition: box-shadow 0.3s ease;
-    }
 
-    .news-card:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
 
-    .news-image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        /* Ensure images cover nicely */
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .news-content {
-        padding: 15px;
-    }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-    .news-title {
-        margin-top: 0;
-        font-size: 18px;
-        font-weight: bold;
-    }
+        .navbar-brand:hover {
+            text-decoration: none;
+        }
 
-    .news-text {
-        font-size: 14px;
-        margin: 10px 0;
-    }
+        .nav-link:hover {
+            transform: scale(1.03);
+            /* Slight zoom effect on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            /* Shadow effect for depth */
+        }
 
-    .btn-outline-primary {
-        margin-top: 10px;
-    }
-</style>
+        /* Custom styles for a more modern look */
+        .carousel-item img {
+            height: 500px;
+            /* Adjust based on your preference */
+            object-fit: cover;
+            /* Ensures images cover the area well */
+        }
+
+        .card {
+            transition: transform .3s;
+            /* Animation for hover effect */
+            border: none;
+            /* Removes the border */
+            border-radius: 0.5rem;
+            /* Rounded corners for the cards */
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            /* Slight zoom effect on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            /* Shadow effect for depth */
+        }
+
+        h2 {
+            font-weight: 600;
+            /* Makes headings bolder */
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: black;
+            /* Makes the arrows more visible */
+        }
+
+        .news-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            /* Ensure images cover nicely */
+        }
+
+        .news-content {
+            padding: 15px;
+        }
+
+        .news-title {
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .news-text {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .btn-outline-primary {
+            margin-top: 10px;
+        }
+    </style>
+
+
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand mx-2" href="{% url 'home:home' %}">DevConnect</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-            <a class="nav-link btn btn-dark" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link btn btn-dark" href="{% url 'explore:explore_home' %}">Explore</a>
-        </li>
-        <!-- <li class="nav-item active">
-            <a class="nav-link" href="#">Projects</a>
-        </li> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand mx-2" href="{% url 'home:home' %}">DevConnect</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Middle Navigation Links -->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'explore:explore_home' %}">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+            </ul>
+            <!-- Theme Toggle and Authentication Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <button id="theme-toggle" class="btn btn-dark">
+                        <i id="theme-icon" class="fas fa-moon"></i> Toggle Theme
+                    </button>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:myprofile' username=user.username %}">
+                        {{user.username }}</a>
+                    </li>
+                        
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
 
-    </ul>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
 
-            {% if user.is_authenticated %}
-            <li class="nav-item active">
-                <a class="nav-link btn btn-dark" href="{% url 'users_handling:myprofile' username=user.username %}">
-                    {{ user.username }}</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link btn btn-dark" href="{% url 'users_handling:logout' %}">Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
 
+
+    
+    <!-- -----------------------------------------------------  Header Done  ----------------------------------- -->
     {% block body %}
 
-    {% endblock %}
-
-
-    {% block footer %}
-
 
     {% endblock %}
 
-    <!-- Bootstrap JS and dependencies -->
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <span>© 2024 SocialMedia. All rights reserved.</span>
+        </div>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.5/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+<script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+        document.body.classList.toggle('dark-theme');
+        let themeIcon = document.getElementById('theme-icon');
+        if (document.body.classList.contains('dark-theme')) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // Apply the saved theme, if any, on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeIcon = document.getElementById('theme-icon');
+        if (localStorage.getItem('theme') === "dark") {
+            document.body.classList.add('dark-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    });
+
+
+</script>
 
 </html>
