@@ -7,14 +7,12 @@ from .models import UserProfile,ContactInformation ,Project ,Education
 from django.contrib.auth.models import User
 from .forms import RegisterForm , ContactInformationForm ,ProjectForm,EducationForm
 
-# build in login
-
-
+# build in login , authentication 
 def login(request):
     return render(request, 'users_handling/login.html', {})
 
 
-
+# This view function will handle the registration page
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -35,13 +33,13 @@ def register(request):
     # This return statement will handle both new (GET) requests and invalid (POST) submissions
     return render(request, 'users_handling/register.html', {'form': form})
 
-
+# This view function will handle the logout page
 @login_required
 def logout_view(request):
     logout(request)  # This will log out the user
     return redirect('home:home')  # Redirect to the home page
 
-
+# show user profile
 @login_required
 def myprofile(request, username):
     my_username = request.user.username
@@ -70,6 +68,10 @@ def myprofile(request, username):
                                                                 'history_of_education':education_history})
 
 
+
+
+
+# Add contact information 
 @login_required
 def edit_contact(request):
     if request.method == "POST":
@@ -83,6 +85,7 @@ def edit_contact(request):
         form = ContactInformationForm()
     return render(request, 'users_handling/edit_contact.html', {'form': form})
 
+# Update contact information
 @login_required
 def update_contact(request):
 
@@ -93,6 +96,9 @@ def update_contact(request):
         return redirect('users_handling:myprofile', request.user.username)
     return render(request, 'users_handling/update_contact.html', {'form': form,'contact':contact})
 
+
+
+# project views
 @login_required
 def add_project(request):
     if request.method == "POST":
@@ -131,6 +137,10 @@ def delete_project(request,id):
     else:
         return redirect('home:home')
 
+
+
+
+# Education views
 @login_required
 def add_education(request):
 
@@ -174,6 +184,10 @@ def delete_education(request,id):
         return redirect('home:home')
 
 
+
+
+
+# This view function will handle the user profile page
 @login_required
 def showprofile(request, id, username):
     # print(username)
@@ -215,7 +229,7 @@ def showprofile(request, id, username):
                                                                 'contact': contact
                                                                 ,'user_projects': projects})
 
-
+# This view function will handle the user profile page
 @login_required
 def following_list(request, id):
     user = User.objects.get(id=id)

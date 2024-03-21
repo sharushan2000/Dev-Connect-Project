@@ -4,7 +4,6 @@
 {% block explore %}
 <main class="container py-4">
 
-
     <!-- Header for eac page -->
     <header class="py-4">
         <div class="container py-4">
@@ -53,7 +52,6 @@
     <!-- end of explore navbar  -->
 
 
-
     <section class="mb-4">
         <h2 class="mb-3">Trending Now</h2>
         <div id="trendingCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -97,24 +95,26 @@
         <h2 class="mb-4 text-center">Recommended For You</h2>
         <div class="container">
             <div class="row">
-                {% for article in articles %}
                 <!-- Article 1 -->
+
+                {% for user_ in users_list %}
                 <div class="col-md-6 col-lg-4 mb-3">
                     <div class="news-card">
-                        <img src="{{ article.urlToImage }}" class="news-image" alt="...">
+                        <img src="{{user_.userprofile.profile_pic.url}}" class="card-img-top" alt="...">
                         <div class="news-content">
-                            <h5 class="news-title">{{article.title}}</h5>
-                            <p class="news-text">{{ article.description | truncatewords:20 }}</p>
-                            <a a href="{{ article.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Read
-                                More</a>
+                            <h5 class="news-title">{{user_.username}}</h5>
+                            <p class="news-text">{{user_.userprofile.bio | truncatewords:20 }}.</p>
+                            <a href="{% url 'users_handling:showprofile' id=user_.id username=user_.username %}"
+                                class="btn btn-sm btn-primary">Check User</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <p>No articles available</p>
+                <p>No Users available</p>
                 {% endfor %}
                 <!-- Repeat for other articles -->
-
+            </div>
+        </div>
 
     </section>
 

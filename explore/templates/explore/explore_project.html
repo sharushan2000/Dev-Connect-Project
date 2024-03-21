@@ -3,8 +3,6 @@
 
 {% block explore %}
 <main class="container py-4">
-
-
     <!-- Header for eac page -->
     <header class="py-4">
         <div class="container py-4">
@@ -38,8 +36,7 @@
                         <form class="form-inline" method="post">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                                    name="search_user">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search_project">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </div>
@@ -50,9 +47,8 @@
             </div>
         </div>
     </div>
-    <!-- end of explore navbar  -->
 
-
+<!-- end of explore navbar  -->
 
     <section class="mb-4">
         <h2 class="mb-3">Trending Now</h2>
@@ -79,13 +75,15 @@
                         <p>Learn how teams across the globe collaborate to create solutions.</p>
                     </div>
                 </div>
-
+                
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#trendingCarousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#trendingCarousel"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#trendingCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#trendingCarousel"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -97,24 +95,27 @@
         <h2 class="mb-4 text-center">Recommended For You</h2>
         <div class="container">
             <div class="row">
-                {% for article in articles %}
                 <!-- Article 1 -->
+
+                {% for project in projects %}
                 <div class="col-md-6 col-lg-4 mb-3">
                     <div class="news-card">
-                        <img src="{{ article.urlToImage }}" class="news-image" alt="...">
+                        
                         <div class="news-content">
-                            <h5 class="news-title">{{article.title}}</h5>
-                            <p class="news-text">{{ article.description | truncatewords:20 }}</p>
-                            <a a href="{{ article.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Read
-                                More</a>
+                            <h5 class="news-title">{{project.title}}</h5>
+                            <p class="news-text">{{project.description | truncatewords:20 }}.</p>
+                            <a href=" {{project.git_url}} "class="btn btn-sm btn-primary">Read More</a>
+                            <a href="{% url 'users_handling:showprofile' id=project.user.id username=project.user.username %}" class="btn btn-sm btn-primary">Check Creator</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <p>No articles available</p>
+                <p>No projects available</p>
                 {% endfor %}
                 <!-- Repeat for other articles -->
-
+ 
+            </div>
+        </div>
 
     </section>
 
