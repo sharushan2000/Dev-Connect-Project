@@ -24,4 +24,10 @@ urlpatterns = [
     path('profile/education/history/', views.education_history, name="education_history"),
     path('profile/update/education/<int:id>/', views.update_education, name="update_education"),
     path('profile/delete/education/<int:id>/', views.delete_education, name="delete_education"),
+
+
+    path('profile/add/experience/', views.add_experience, name="add_experience"),
+    #edit experience
+    path('profile/update/experience/<int:id>/', views.update_exeperience, name="update_experience"), 
+    
 ]

@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile,ContactInformation ,Project ,Education
+from .models import Project ,Education,Experience
 from django.contrib.auth.models import User
-from .forms import RegisterForm , ContactInformationForm ,ProjectForm,EducationForm
+from .forms import RegisterForm , ContactInformationForm ,ProjectForm,EducationForm ,ExperienceForm
 
 # build in login , authentication 
 def login(request):
@@ -21,7 +21,7 @@ def register(request):
             username = form.cleaned_data.get('username')
             messages.success(
                 request, f'Welcome {username}, your account has been created successfully. Please log in.')
-            return redirect('home:home')
+            return redirect('users_handling:login')
         else:
             # Form is not valid, so render the form again with validation errors
             messages.error(request, 'Please correct the error below.')
@@ -46,7 +46,7 @@ def myprofile(request, username):
     id = request.user.id
     my_contact = None
     education_history = None
-  
+    my_exeprience = None
 
     if hasattr(request.user ,'users_education'):
         education_history = request.user.users_education.all()
@@ -55,6 +55,9 @@ def myprofile(request, username):
     if hasattr(request.user, 'contactinformation'):
         my_contact = request.user.contactinformation
     # print(my_contact)
+    if hasattr(request.user, 'users_experience'):
+        my_exeprience = request.user.users_experience.all()
+        print(my_exeprience)
 
     if hasattr(request.user, 'projects_created'):
         my_projects = request.user.projects_created.all()
@@ -65,7 +68,8 @@ def myprofile(request, username):
     return render(request, 'users_handling/my_resume.html', {'my': my ,
                                                                 'my_contact': my_contact,
                                                                 'my_projects': my_projects,
-                                                                'history_of_education':education_history})
+                                                                'history_of_education':education_history,
+                                                                'my_exeprience': my_exeprience,})
 
 
 
@@ -246,3 +250,31 @@ def followers_list(request, id):
     return render(request, 'users_handling/followers_list.html', {'user': user})
 
 # This is the end of the views.py file
+
+
+@login_required
+def add_experience(request):
+     
+    if request.method == "POST":
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            experience = form.save(commit=False)
+            experience.user = request.user
+            experience.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        
+
+    form = ExperienceForm()
+    return render(request, 'users_handling/add_experience.html', {'form': form})
+
+@login_required
+def update_exeperience(request,id):
+    experience = Experience.objects.get(id=id)
+    if experience in request.user.users_experience.all():
+        form = ExperienceForm(request.POST or None , instance=experience)
+        if form.is_valid():
+            form.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        return render(request, 'users_handling/update_experience.html', {'form': form,'experience':experience})
+    else:
+        return redirect('home:home')

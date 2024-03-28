@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Follower List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Follower List</h1>
-        <ul class="list-group">
- 
-            {% for follower in user.userprofile.followed_by.all %}
-              
-                    <a href="{% url 'users_handling:showprofile' id=follower.user.id username=follower.user.username %}"><li>{{follower.user.username}}</li></a>
+{% extends 'base.html' %}
 
-            {% endfor %}
-        </ul>
+{% block body %}
+<div class="container">
+    <h1>Follower List</h1>
+    <div class="row">
+        {% for follower in user.userprofile.followed_by.all %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ follower.user.username }}</h5>
+                    <p class="card-text">{{ follower.bio }}</p>
+                    <a href="{% url 'users_handling:showprofile' id=follower.user.id username=follower.user.username %}" class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

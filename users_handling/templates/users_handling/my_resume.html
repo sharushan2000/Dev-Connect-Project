@@ -88,7 +88,8 @@
 
             <div class="contactInfo">
                 <h3 class="title">Contact Info</h3>
-                <a href="{% url 'users_handling:edit_contact' %}" class="btn btn-dark">Complete your profile by adding
+                <a href="{% url 'users_handling:edit_contact' %}" class="btn btn-dark mx-2">Complete your profile by
+                    adding
                     contact</a>
                 <ul>
                     <li>
@@ -204,11 +205,11 @@
 
                         <li class="nav-item">
                             <a class="nav-link btn-dark btn-outline-secondary"
-                                href="{% url 'users_handling:following_list' id=user.id %}">Followers</a>
+                                href="{% url 'users_handling:following_list' id=user.id %}">Following</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn-dark "
-                                href="{% url 'users_handling:followers_list' id=user.id %}">Following</a>
+                                href="{% url 'users_handling:followers_list' id=user.id %}">Followers</a>
                         </li>
                     </ul>
                     <!-- Theme Toggle and Authentication Links -->
@@ -229,72 +230,37 @@
                     Repellendus, corporis et nulla blanditiis vel animi, officia accusantium similique consequatur
                     voluptate sit alias iure neque!</p>
             </div>
+            <!-- Experiens ------------------------------------------------------------- begin -->
+            {% if my_exeprience %}
+
+            <div class="about">
+                <a href="{% url 'users_handling:add_experience' %}" style="text-decoration: none;"><h2 class="title2">experience</h2></a>
+                {% for experience in my_exeprience %}
+                <a href="{%url 'users_handling:update_experience' id=experience.id %}" style="text-decoration: none; font-style: italic; color: gray;"><div class="box">
+                    <div class="year_company">
+                        <h5>{{experience.company}}</h5>
+                        <h6>{{experience.start_date}} -{{experience.end_date}}<h6>
+                    </div>
+                    <div class="text">
+                        <h4>{{experience.title}}</h4>
+                        <ul>
+                            <li>
+                                {{experience.description}}
+                            </li>
+
+                        </ul>
+                    </div>
+                </div></a>
+                {% endfor %}
+
+            </div>
+            {% else %}
             <div class="about">
                 <h2 class="title2">experience</h2>
-                <div class="box">
-                    <div class="year_company">
-                        <h5>Company name 1 </h5>
-                        <h6>Jan 2020 - Jan 2020<h6>
-                    </div>
-                    <div class="text">
-                        <h4>Job title 1</h4>
-                        <ul>
-                            <li>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
-                                omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="year_company">
-                        <h5>Company name 2 </h5>
-                        <h6>Jan 2020 - Jan 2020</h6>
-                    </div>
-                    <div class="text">
-                        <h4>Job title 2</h4>
-                        <ul>
-                            <li>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
-                                omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="year_company">
-                        <h5>Company name 3 </h5>
-                        <h6>Jan 2020 - Jan 2020</h6>
-                    </div>
-                    <div class="text">
-                        <h4>Job title 3</h4>
-                        <ul>
-                            <li>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, inventore quod
-                                omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                            <li>
-                                elit. Necessitatibus, inventore quod omnis accusantium vel.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <a href="{% url 'users_handling:add_experience' %}" class="btn btn-dark"> Add experience </a>
             </div>
+            {% endif %}
+            <!-- Experiens ------------------------------------------------------------- end -->
 
             <div class="about interest">
                 <div class="projects-section">

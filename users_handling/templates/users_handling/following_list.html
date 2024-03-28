@@ -1,49 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User List</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .flex-container {
-            display: flex;
-            flex-direction: column; /* Adjust this as needed; options: row, row-reverse, column, column-reverse */
-            align-items: center; /* Center the items horizontally */
-            justify-content: center; /* Center the items vertically */
-            gap: 10px; /* Adjust the space between items */
-        }
+{% extends 'base.html' %}
 
-        .flex-item {
-            width: 100%; /* Adjust this as needed */
-        }
-
-        @media (min-width: 768px) {
-            .flex-container {
-                flex-direction: row; /* Adjust layout for larger screens */
-                flex-wrap: wrap; /* Allow items to wrap as needed */
-            }
-            .flex-item {
-                width: calc(33.333% - 20px); /* Adjust this as needed, subtracting the gap */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>User List</h1>
-        <div class="flex-container">
-            {% for following_user in user.userprofile.follows.all %}
-                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}" class="list-group-item flex-item">{{ following_user.user.username }}</a>
-            {% endfor %}
-            <!-- Static items for demonstration -->
-            <!-- <div class="list-group-item flex-item">User 1</div>
-            <div class="list-group-item flex-item">User 2</div>
-            <div class="list-group-item flex-item">User 3</div> -->
-            <!-- Add more list items for each user -->
+{% block body %}
+<div class="container">
+    <h1>User List</h1>
+    <div class="row"> <!-- Use Bootstrap's row class for a flex container -->
+        {% for following_user in user.userprofile.follows.all %}
+        <div class="col-md-4 col-sm-6 mb-4"> <!-- Grid columns for responsive design -->
+            <div class="card h-100"> <!-- Use Bootstrap's card class for styling -->
+                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}" class="text-decoration-none text-dark">
+                    <img src="{{ following_user.profile_pic.url }}" alt="{{ following_user.user.username }}" class="card-img-top user-img"> <!-- Card image top -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ following_user.user.username }}</h5>
+                        <p class="card-text">{{ following_user.bio }}</p> <!-- Conditional display for bio -->
+                    </div>
+                </a>
+            </div>
         </div>
+        {% endfor %}
     </div>
-
-    <!-- Include Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

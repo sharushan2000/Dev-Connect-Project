@@ -39,7 +39,7 @@ def explore_users(request):
 
         if search:
             # Filter users based on the search query
-            users = User.objects.filter(username__contains=search)
+            users = User.objects.filter(username__contains=search)[0:10]
             return render(request, 'explore/explore_users.html', {'users_list': users})
 
     # Retrieve all users

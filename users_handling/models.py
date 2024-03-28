@@ -59,6 +59,22 @@ class Education(models.Model):
         return self.user.username + " " + self.degree + " " + self.school
     
     
+
+class Experience(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_experience')
+    title = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    description = models.TextField(blank=True , null=True)
+    
+
+    class Meta:
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return self.user.username + " " + self.title + " " + self.company
+    
 #create profile when user created
 def create_profile(sender,instance,created,**kwargs):
     if created:

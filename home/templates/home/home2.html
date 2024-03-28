@@ -5,14 +5,15 @@
 {% block content %}
 <section class="hero-section">
     <div class="hero">
-        <h2>Welcome to the Computer Science community</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum possimus mollitia esse labore neque. Animi voluptatum unde molestias aliquid earum voluptate? Illo laboriosam blanditiis quo neque repellat aut quasi molestias!
+               <h2>Welcome to the Computer Science community</h2>
+        <p>Welcome to our exciting new platform, where computer science students like you come together to connect,
+             collaborate, and create an awesome community. Join us as we build the ultimate hub for computer science enthusiasts to hang around in, learn from and with each other, and grow together.
         </p>
         <div class="buttons">
             {% if user.is_authenticated %}
             <a href="#" class="learn">Learn More</a>
             {% else %}
-            <a href="{% url 'users_handling:signup' %}" class="signin">Join Us Today!</a>
+            <a href="{% url 'users_handling:signup' %}" class="learn">Join Us Today!</a>
             <a href="#" class="learn">Learn More</a>
             {% endif %}
 
@@ -26,6 +27,7 @@
         <!-- END: ed8c6549bwf9 -->
     </div>
 </section>
+
 
 {% endblock %}
 ```

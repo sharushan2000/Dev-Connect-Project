@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import ContactInformation ,Project , Education
+from .models import ContactInformation ,Project , Education ,Experience
 
 
 class RegisterForm(UserCreationForm):
@@ -97,5 +97,25 @@ class EducationForm(forms.ModelForm):
             'school': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'School/College/University/Institute'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date' ,"placeholder": 'Start Date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date',"placeholder": 'End Date'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
+        }
+
+    
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['title', 'company', 'start_date', 'end_date', 'description']
+        labels = {
+            'title': '',
+            'company': '',
+            'start_date': '',
+            'end_date': '',
+            'description': ''
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
+            'company': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date', 'placeholder': 'Start Date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'Date', 'placeholder': 'End Date'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
         }

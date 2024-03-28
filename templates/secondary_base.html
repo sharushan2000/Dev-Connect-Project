@@ -11,35 +11,46 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">DevConnect</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand mx-2" href="{% url 'home:home' %}">DevConnect</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <!-- Middle Navigation Links -->
+            <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Connect</a>
+                    <a class="nav-link" href="{% url 'explore:explore_home' %}">Explore</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Projects</a>
+                    <a class="nav-link" href="#">About Us</a>
                 </li>
+            </ul>
+            <!-- Theme Toggle and Authentication Links -->
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <button id="theme-toggle" class="btn btn-dark">
+                        <i id="theme-icon" class="fas fa-moon"></i> Toggle Theme
+                    </button>
                 </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:myprofile' username=user.username %}">
+                        {{user.username }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users_handling:profile' username=user.username %}">Welcome {{ user.username }}</a>
-                    </li>
+                        
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:logout' %}">Logout</a>
+                </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_handling:login' %}">Login</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
