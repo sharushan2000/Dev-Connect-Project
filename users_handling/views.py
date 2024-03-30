@@ -57,7 +57,7 @@ def myprofile(request, username):
     # print(my_contact)
     if hasattr(request.user, 'users_experience'):
         my_exeprience = request.user.users_experience.all()
-        print(my_exeprience)
+        # print(my_exeprience)
 
     if hasattr(request.user, 'projects_created'):
         my_projects = request.user.projects_created.all()
@@ -65,6 +65,8 @@ def myprofile(request, username):
 
     my = User.objects.get(id=id)
     # This will render the profile page
+    pic = request.user.userprofile.profile_pic.url
+    print(pic)
     return render(request, 'users_handling/my_resume.html', {'my': my ,
                                                                 'my_contact': my_contact,
                                                                 'my_projects': my_projects,

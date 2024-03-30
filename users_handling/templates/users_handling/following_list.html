@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
 <div class="container">
@@ -8,7 +9,7 @@
         <div class="col-md-4 col-sm-6 mb-4"> <!-- Grid columns for responsive design -->
             <div class="card h-100"> <!-- Use Bootstrap's card class for styling -->
                 <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}" class="text-decoration-none text-dark">
-                    <img src="{{ following_user.profile_pic.url }}" alt="{{ following_user.user.username }}" class="card-img-top user-img"> <!-- Card image top -->
+                    <img src="{% static 'images/programmer.jpg' %}" alt="{{ following_user.user.username }}" class="card-img-top user-img"> <!-- Card image top -->
                     <div class="card-body">
                         <h5 class="card-title">{{ following_user.user.username }}</h5>
                         <p class="card-text">{{ following_user.bio }}</p> <!-- Conditional display for bio -->

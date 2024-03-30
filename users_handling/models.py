@@ -11,7 +11,7 @@ class UserProfile(models.Model): # This is the model for the user profile
                                      blank=True)
     public = models.BooleanField(default=True)
     bio = models.CharField(max_length=100, blank=True)
-    profile_pic = models.ImageField(default='profile_pic.png' ,upload_to='profile_pics', blank=True)
+    profile_pic = models.ImageField(default='default_profile_pic.png' ,upload_to='profile_pics', blank=True)
 
     def __str__(self):
         return self.user.username

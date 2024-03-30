@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'home',
     'users_handling',
     'explore',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -78,16 +79,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-# Database
+# Database Default SQL Lite
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+# Database configuration for PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('DJANGO_DB_ENGINE'),
+        'NAME': env('DJANGO_DB_NAME'),
+        'USER': env('DJANGO_DB_USER'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD'),
+        'HOST':env('DJANGO_DB_HOST'),
+        'PORT': env('DJANGO_DB_PORT'),
     }
-}
 
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -149,4 +163,46 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 MEDIA_URL = '/media/' # This is the url that will be used to access the media files
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')# This is the directory where the media files will be stored
+
+
+
+
+# Amazon S3 configuration 
+
+
+AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID') # - Enter your AWS Access Key ID HERE
+AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY') # - Enter your AWS Secret Access Key ID HERE
+
+AWS_STORAGE_BUCKET_NAME = 'dj-devconnect-bucket' # - Enter your S3 bucket name HERE
+
+# Django 4.2 >
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BUCKET_NAME": AWS_STORAGE_BUCKET_NAME,
+        # Add any additional S3 settings here
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+        "BUCKET_NAME": AWS_STORAGE_BUCKET_NAME,
+        # Add any additional S3 settings for static files here
+    }
+}
+
+# Django < 4.2 
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+
+AWS_S3_FILE_OVERWRITE = False
+
+
+# Admin styling adjustment
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+
+
 

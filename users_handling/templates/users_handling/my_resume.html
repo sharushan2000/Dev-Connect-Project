@@ -38,7 +38,11 @@
         <div class="left_side">
             <div class="profileText">
                 <div class="imgBx">
+                    {% if user.userprofile.profile_pic %}
+                    <img src="{{user.userprofile.profile_pic.url}}">
+                    {% else %}
                     <img src="{% static 'images/img.png' %}">
+                    {% endif %}
                 </div>
                 <h2> {{user.first_name}} {{user.last_name}} <br><span>{{user.username}}</span></h2>
             </div>
