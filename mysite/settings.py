@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # setting up environ
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env() 
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,8 +30,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = []
- 
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "dev-connect.up.railway.app"] 
+
+CSRF_TRUSTED_ORIGINS = ['https://dev-connect.up.railway.app']
 
 # Application definition
 
