@@ -3,6 +3,7 @@ from django.shortcuts import render
 import requests
 from users_handling.models import Project
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def explore_home(request):
@@ -31,6 +32,7 @@ def explore_home(request):
 
 
 # Define a view function to handle exploring users
+@login_required
 def explore_users(request):
 
     if request.method == 'POST':
@@ -47,7 +49,7 @@ def explore_users(request):
 
     return render(request, 'explore/explore_users.html', {'users_list': users})
 
-
+@login_required
 def explore_project(request):
 
     if request.method == 'POST':
