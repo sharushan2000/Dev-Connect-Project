@@ -83,26 +83,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database Default SQL Lite
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Database configuration for PostgreSQL
-# DATABASES = {
-#     'default': {
-#         'ENGINE': env('DJANGO_DB_ENGINE'),
-#         'NAME': env('DJANGO_DB_NAME'),
-#         'USER': env('DJANGO_DB_USER'),
-#         'PASSWORD': env('DJANGO_DB_PASSWORD'),
-#         'HOST':env('DJANGO_DB_HOST'),
-#         'PORT': env('DJANGO_DB_PORT'),
-#     }
+DATABASES = {
+    'default': {
+        'ENGINE': env('DJANGO_DB_ENGINE'),
+        'NAME': env('DJANGO_DB_NAME'),
+        'USER': env('DJANGO_DB_USER'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD'),
+        'HOST':env('DJANGO_DB_HOST'),
+        'PORT': env('DJANGO_DB_PORT'),
+    }
 
-# }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
