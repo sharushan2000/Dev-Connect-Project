@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile ,Project,ContactInformation ,Education,Experience
+from .models import UserProfile ,Project,ContactInformation ,Education,Experience,Geek
 # Register your models here.
 
 
@@ -8,3 +8,4 @@ admin.site.register(Project) # This line will make the Project model visible on 
 admin.site.register(ContactInformation) # This line will make the Project model visible on the admin page
 admin.site.register(Education) # This line will make the Project model visible on the admin page
 admin.site.register(Experience) # This line will make the Project model visible on the admin page
+admin.site.register(Geek) # This line will make the Project model visible on the admin page

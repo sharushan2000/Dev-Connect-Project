@@ -41,7 +41,7 @@ def logout_view(request):
 
 # show user profile
 @login_required
-def myprofile(request, username):
+def my_resume_profile(request, username):
     my_username = request.user.username
     id = request.user.id
     my_contact = None
@@ -74,7 +74,19 @@ def myprofile(request, username):
                                                                 'my_exeprience': my_exeprience,})
 
 
+def my_profile(request):
+    my = request.user
+    my_profile = my.userprofile
 
+    no_of_following = my_profile.follows.all().count()
+    no_of_followers = my_profile.followed_by.all().count()
+    return render(request, 'users_handling/my/my_profile.html', {
+        'my': my,
+        'my_profile': my_profile,
+        'no_of_following': no_of_following,
+        'no_of_followers': no_of_followers
+
+    })
 
 
 # Add contact information 
@@ -208,7 +220,7 @@ def showprofile(request, id, username):
     # print(profile.userprofile)
     # print(request.user.userprofile.follows.all())
     if profile == request.user:
-        return redirect('users_handling:myprofile', username)
+        return redirect('users_handling:myprofile')
     if request.method == "POST":
         showing_user_userprofile = profile.userprofile
         current_user_userprofile = request.user.userprofile
@@ -228,12 +240,16 @@ def showprofile(request, id, username):
     else:
         follow = True
 
+    no_of_following = profile.userprofile.follows.all().count()
+    no_of_followers = profile.userprofile.followed_by.all().count()
     # This will render the profile page
-    return render(request, 'users_handling/user_profile.html', {'profile': profile, 
+    return render(request, 'users_handling/users/user_profile.html', {'user_profile': profile, 
                                                                 'name': username, 
                                                                 'follow': follow, 
                                                                 'contact': contact
-                                                                ,'user_projects': projects})
+                                                                ,'user_projects': projects,
+                                                                'no_of_following': no_of_following,
+                                                                'no_of_followers': no_of_followers})
 
 # This view function will handle the user profile page
 @login_required

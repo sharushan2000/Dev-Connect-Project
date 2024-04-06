@@ -13,6 +13,7 @@ class UserProfile(models.Model): # This is the model for the user profile
     bio = models.CharField(max_length=100, blank=True)
     profile_pic = models.ImageField(default='default_profile_pic.png' ,upload_to='profile_pics', blank=True)
 
+
     def __str__(self):
         return self.user.username
     
@@ -60,6 +61,7 @@ class Education(models.Model):
     
     
 
+
 class Experience(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_experience')
     title = models.CharField(max_length=100)
@@ -74,7 +76,21 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.user.username + " " + self.title + " " + self.company
+
+class Geek(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE , related_name='geeks')
+    geek_body = models.CharField(max_length=500)
+    created_at = models.DateField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='geek_likes', blank=True)
+
+    def __str__(self) -> str:
+        return (
+            f"{self.user}"
+            f"({self.created_at:%Y-%m-%d %H:%M})"
+        )
     
+
+
 #create profile when user created
 def create_profile(sender,instance,created,**kwargs):
     if created:

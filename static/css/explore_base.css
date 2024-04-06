@@ -1,0 +1,108 @@
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.navbar-brand:hover {
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    transform: scale(1.03);
+    /* Slight zoom effect on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    /* Shadow effect for depth */
+}
+
+/* Custom styles for a more modern look */
+.carousel-item img {
+    height: 500px;
+    /* Adjust based on your preference */
+    object-fit: cover;
+    /* Ensures images cover the area well */
+}
+
+.card {
+    transition: transform .3s;
+    /* Animation for hover effect */
+    border: none;
+    /* Removes the border */
+    border-radius: 0.5rem;
+    /* Rounded corners for the cards */
+}
+
+.card:hover {
+    transform: scale(1.03);
+    /* Slight zoom effect on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    /* Shadow effect for depth */
+}
+
+h2 {
+    font-weight: 600;
+    /* Makes headings bolder */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+    /* Makes the arrows more visible */
+}
+
+.news-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    /* Ensure images cover nicely */
+}
+
+.news-content {
+    padding: 15px;
+}
+
+.news-title {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.news-text {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.btn-outline-primary {
+    margin-top: 10px;
+}
