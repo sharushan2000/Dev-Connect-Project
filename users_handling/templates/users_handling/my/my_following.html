@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <h1>User List</h1>
+    <div class="row"> <!-- Use Bootstrap's row class for a flex container -->
+        {% for following_user in following_users %}
+        <div class="col-md-4 col-sm-6 mb-4"> <!-- Grid columns for responsive design -->
+            <div class="card h-100"> <!-- Use Bootstrap's card class for styling -->
+                <a href="{% url 'users_handling:showprofile' id=following_user.user.id username=following_user.user.username %}" class="text-decoration-none text-dark">
+                    <img src="{% static 'images/programmer.jpg' %}" alt="{{ following_user.user.username }}" class="card-img-top user-img"> <!-- Card image top -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ following_user.user.username }}</h5>
+                        <p class="card-text">{{ following_user.bio }}</p> <!-- Conditional display for bio -->
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -267,7 +267,17 @@ def followers_list(request, id):
     # This will render the profile page
     return render(request, 'users_handling/followers_list.html', {'user': user})
 
-# This is the end of the views.py file
+@login_required
+def following_info(request):
+    user = request.user
+    following_users = user.userprofile.follows.all()
+    return render(request, 'users_handling/my/my_following.html', {'following_users': following_users})
+
+@login_required
+def followers_info(request):
+    user = request.user
+    follower_users = user.userprofile.followed_by.all()
+    return render(request, 'users_handling/my/my_followers.html', {'follower_users': follower_users})
 
 
 @login_required

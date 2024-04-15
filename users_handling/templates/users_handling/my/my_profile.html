@@ -36,10 +36,12 @@
         <div class="col-md-9">
             <div class="profile-header">
                 <img src="https://via.placeholder.com/150/757575/ffffff?text=User" class="profile-pic" alt="Profile picture" width="150" height="150">
-                <h2>Username</h2>
+                <h2>{{my.username}}</h2>
                 <p>Software Engineer | Tech Enthusiast</p>
-                <p>Followers: {{no_of_followers}} | Following: {{no_of_following}} </p>
-                
+                <div class="box">             
+                    <a href="{% url 'users_handling:followers_info' %}" style="text-decoration: none; "><p  style="display:inline">Followers: {{no_of_followers}} </p></a>
+                    <a href="{% url 'users_handling:following_info' %}" style="text-decoration: none; "><p  style="display:inline">| Following: {{no_of_following}} </p></a>
+                </div>   
             </div>
 
             <div class="content">
@@ -47,22 +49,26 @@
                 <div class="row justify-content-md-center">
                     <div class="col-md-8">
                         <div class="tweet-form">
-                            <h4>New Tweet</h4>
+                            <h4>New Geek</h4>
                             <textarea class="form-control mb-3" rows="3" placeholder="What's happening?"></textarea>
-                            <button class="btn">Tweet</button>
+                            <button class="btn">Geek</button>
                         </div>
                     </div>
                 </div>
             </div>
                 <h3>Recent Posts</h3>
+                {% for geek in my.geeks.all %}
                 <div class="post">
-                    <h5>Post Title</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non laoreet dui.</p>
+                    <h4>{{geek.title}}</h4>
+                    <div class="card-text">
+                        <p >{{geek.geek_body}}</p>
+                    </div>
+                       <small> Posted on: {{geek.created_at}}</small>
                 </div>
-                <div class="post">
-                    <h5>Another Post</h5>
-                    <p>Praesent condimentum lacus nec ante imperdiet, at facilisis lorem dapibus.</p>
-                </div>
+
+
+                {% endfor %}
+
                 <!-- More posts can be added here -->
             </div>
         </div>
