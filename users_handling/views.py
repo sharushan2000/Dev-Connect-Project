@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect 
-from django.http import HttpResponse
+from django.shortcuts import render, redirect ,get_object_or_404
+from django.http import HttpResponse,JsonResponse
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,7 @@ from .models import Project ,Education,Experience
 from django.contrib.auth.models import User
 from .forms import RegisterForm , ContactInformationForm ,ProjectForm,EducationForm ,ExperienceForm
 
+###################################################################################################################################################################################
 # build in login , authentication 
 def login(request):
     return render(request, 'users_handling/login.html', {})
@@ -66,8 +67,8 @@ def my_resume_profile(request, username):
     my = User.objects.get(id=id)
     # This will render the profile page
     pic = request.user.userprofile.profile_pic.url
-    print(pic)
-    return render(request, 'users_handling/my_resume.html', {'my': my ,
+    # print(pic)
+    return render(request, 'users_handling/my/my_resume.html', {'my': my ,
                                                                 'my_contact': my_contact,
                                                                 'my_projects': my_projects,
                                                                 'history_of_education':education_history,
@@ -88,6 +89,8 @@ def my_profile(request):
 
     })
 
+def addgeek(request):
+    pass
 
 # Add contact information 
 @login_required
@@ -202,14 +205,46 @@ def delete_education(request,id):
         return redirect('home:home')
 
 
+@login_required
+def add_experience(request):
+     
+    if request.method == "POST":
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            experience = form.save(commit=False)
+            experience.user = request.user
+            experience.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        
+
+    form = ExperienceForm()
+    return render(request, 'users_handling/add_experience.html', {'form': form})
+
+@login_required
+def update_exeperience(request,id):
+    experience = Experience.objects.get(id=id)
+    if experience in request.user.users_experience.all():
+        form = ExperienceForm(request.POST or None , instance=experience)
+        if form.is_valid():
+            form.save()
+            return redirect('users_handling:myprofile', request.user.username)
+        return render(request, 'users_handling/update_experience.html', {'form': form,'experience':experience})
+    else:
+        return redirect('home:home')
+
+##########################################################################################################################################
+############################## My Section END ##############################################################################################
 
 
-
-# This view function will handle the user profile page
+################################### USER #########################################################################################
+# This view function will handle the user profile page ,use for showin other users profile , not for resume
 @login_required
 def showprofile(request, id, username):
     # print(username)
-    profile = User.objects.get(id=id)
+    profile = get_object_or_404(User,id=id,username=username)
+    if profile == request.user:
+        return redirect('users_handling:myprofile')
+    
     contact = None
     projects = None
     if hasattr(profile,'contactinformation'):
@@ -219,8 +254,7 @@ def showprofile(request, id, username):
 
     # print(profile.userprofile)
     # print(request.user.userprofile.follows.all())
-    if profile == request.user:
-        return redirect('users_handling:myprofile')
+
     if request.method == "POST":
         showing_user_userprofile = profile.userprofile
         current_user_userprofile = request.user.userprofile
@@ -251,7 +285,92 @@ def showprofile(request, id, username):
                                                                 'no_of_following': no_of_following,
                                                                 'no_of_followers': no_of_followers})
 
+
+
+@login_required
+def follow_unfollow(request):
+    if request.method == "POST":
+        user_profile_id = request.POST.get('user_profile_id')  # Get the target user profile ID from the request
+        action = request.POST.get('action')  # Get the action (follow/unfollow) from the request
+
+        if not user_profile_id or not action:
+            return JsonResponse({'error': 'Invalid request'}, status=400)  # Return error if ID or action is missing
+
+        try:
+            # Fetch the target user's profile using the provided user profile ID
+            target_user_profile = User.objects.get(id=user_profile_id).userprofile
+            # Fetch the current logged-in user's profile
+            current_user_profile = request.user.userprofile
+
+            if action == "unfollow":
+                # Remove the target user's profile from the current user's follows
+                current_user_profile.follows.remove(target_user_profile)
+            elif action == "follow":
+                # Add the target user's profile to the current user's follows
+                current_user_profile.follows.add(target_user_profile)
+
+            # Save the changes to the current user's profile
+            current_user_profile.save()
+
+            # Calculate the updated follower and following counts
+            no_of_following = target_user_profile.follows.count()
+            no_of_followers = target_user_profile.followed_by.count()
+
+            # Return a success response with the updated counts and action
+            return JsonResponse({
+                'success': True,
+                'no_of_following': no_of_following,
+                'no_of_followers': no_of_followers,
+                'action': action
+            })
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)  # Return error if the user does not exist
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)  # Return error if the request method is not POST
+
+@login_required
+def user_resume(request, id, username):
+    user = get_object_or_404(User, id=id)
+    user_contact = None
+    user_education_history = None
+    user_experience = None
+    user_projects = None
+
+    if hasattr(user, 'users_education'):
+        user_education_history = user.users_education.all()
+
+    if hasattr(user, 'contactinformation'):
+        user_contact = user.contactinformation
+
+    if hasattr(user, 'projects_created'):
+        user_projects = user.projects_created.all()
+
+    if hasattr(user, 'users_experience'):
+        user_experience = user.users_experience.all()
+
+    return render(request, 'users_handling/users/users_resume.html', {
+        'user': user,
+        'user_education_history': user_education_history,
+        'user_contact': user_contact,
+        'user_experience': user_experience,
+        'user_projects': user_projects,
+    })
+
 # This view function will handle the user profile page
+@login_required
+def following_info(request):
+    user = request.user
+    following_users = user.userprofile.follows.all()
+    return render(request, 'users_handling/my/my_following.html', {'following_users': following_users})
+
+@login_required
+def followers_info(request):
+    user = request.user
+    follower_users = user.userprofile.followed_by.all()
+    return render(request, 'users_handling/my/my_followers.html', {'follower_users': follower_users})
+
+
+
 @login_required
 def following_list(request, id):
     user = User.objects.get(id=id)
@@ -267,42 +386,3 @@ def followers_list(request, id):
     # This will render the profile page
     return render(request, 'users_handling/followers_list.html', {'user': user})
 
-@login_required
-def following_info(request):
-    user = request.user
-    following_users = user.userprofile.follows.all()
-    return render(request, 'users_handling/my/my_following.html', {'following_users': following_users})
-
-@login_required
-def followers_info(request):
-    user = request.user
-    follower_users = user.userprofile.followed_by.all()
-    return render(request, 'users_handling/my/my_followers.html', {'follower_users': follower_users})
-
-
-@login_required
-def add_experience(request):
-     
-    if request.method == "POST":
-        form = ExperienceForm(request.POST)
-        if form.is_valid():
-            experience = form.save(commit=False)
-            experience.user = request.user
-            experience.save()
-            return redirect('users_handling:myprofile', request.user.username)
-        
-
-    form = ExperienceForm()
-    return render(request, 'users_handling/add_experience.html', {'form': form})
-
-@login_required
-def update_exeperience(request,id):
-    experience = Experience.objects.get(id=id)
-    if experience in request.user.users_experience.all():
-        form = ExperienceForm(request.POST or None , instance=experience)
-        if form.is_valid():
-            form.save()
-            return redirect('users_handling:myprofile', request.user.username)
-        return render(request, 'users_handling/update_experience.html', {'form': form,'experience':experience})
-    else:
-        return redirect('home:home')

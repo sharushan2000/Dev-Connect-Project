@@ -111,15 +111,15 @@
 
 <nav class="navbar navbar-dark">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">DarkProfile</span>
+        <a href="{%url 'home:home' %}" style="text-decoration: none;"><span class="navbar-brand mb-0 h1">DevConnect</span></a>
     </div>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 sidebar">
-            <a href="{% url 'home:home' %}">Home</a>
-            <a href="#">Check Resume</a>
+            <a href="{% url 'home:home' %}" >Home</a>
+            <a href="{% url 'users_handling:user_resume_profile' username=user_profile.username id=user_profile.id %}">Check Resume</a>
             <a href="#">Messages</a>
 
             <!-- <a href="{% url 'users_handling:my_resume_profile' username=user.username %}">Resume View</a> -->
@@ -132,16 +132,17 @@
                 <img src="https://via.placeholder.com/150/757575/ffffff?text=User" class="profile-pic" alt="Profile picture" width="150" height="150">
                 <h2>{{ user_profile.username }}</h2>
                 <p>Software Engineer | Tech Enthusiast</p>
-                <p>Followers: {{no_of_followers}} | Following: {{no_of_following}}</p>
-                <form method="post">
+                <p>Followers: <span id="followers-count">{{ no_of_followers }}</span> | Following: <span id="following-count">{{ no_of_following }}</span></p>
+                <form id="post-form" onsubmit="return false;">
                     {% csrf_token %}
-                    {% if follow %}
-                        <button type="submit" class="btn btn-success" name="isfollow" value="follow">Follow</button>
-                    {% else %}
-                        <button type="submit" class="btn btn-danger" name="isfollow" value="unfollow">Unfollow</button>
-                    {% endif %}
+                    <button type="button" class="btn btn-success" id="follow-unfollow-btn" data-action="{% if follow %}follow{% else %}unfollow{% endif %}" onclick="followUnfollow({{ user_profile.id }})">
+                        {% if follow %}
+                            Follow
+                        {% else %}
+                            Unfollow
+                        {% endif %}
+                    </button>
                 </form>
-
             </div>
 
 
@@ -165,6 +166,42 @@
         &copy; 2024 DarkProfile. All rights reserved.
     </div>
 </footer>
+<script>
+    function followUnfollow(userProfileId) {
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        var action = document.getElementById('follow-unfollow-btn').getAttribute('data-action');  // Get the current action
+
+        fetch("{% url 'users_handling:follow_unfollow' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                user_profile_id: userProfileId,  // Pass the target user's ID in the request
+                action: action
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var followBtn = document.getElementById('follow-unfollow-btn');
+                if (data.action == 'follow') {
+                    followBtn.innerText = 'Unfollow';  // Update button text
+                    followBtn.setAttribute('data-action', 'unfollow');  // Update action to unfollow
+                } else {
+                    followBtn.innerText = 'Follow';  // Update button text
+                    followBtn.setAttribute('data-action', 'follow');  // Update action to follow
+                }
+                document.getElementById('followers-count').innerText = data.no_of_followers;
+                document.getElementById('following-count').innerText = data.no_of_following;
+            } else {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

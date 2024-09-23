@@ -16,7 +16,10 @@ urlpatterns = [
 
     path('profile/<int:id>/following/', views.following_list, name="following_list"), # show follower of curretn users , may have to create new one for other users
     path('profile/<int:id>/followers/', views.followers_list, name="followers_list"), # show follower of curretn users , may have to create new one for other users
+
     path('profile/<int:id>/<str:username>/', views.showprofile, name="showprofile"), #other user profile 
+    path('follow_unfollow/', views.follow_unfollow, name='follow_unfollow'),
+    path('profile/<int:id>/<str:username>/resume/',views.user_resume , name = "user_resume_profile"),
 
     path('profile/followinginfo/', views.following_info, name="following_info"), # show following info of current user, may have to create new one for other users
     path('profile/followersinfo/', views.followers_info, name="followers_info"), # show followers info of current user, may have to create new one for other users

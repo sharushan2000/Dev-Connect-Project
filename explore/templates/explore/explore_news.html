@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-                    <a class="navbar-brand" href="{% url 'explore:explore_home' %}">Explore</a>
+                    <a class="navbar-brand" href="{% url 'explore:explore_home' %}">Home</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -31,15 +31,20 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-item nav-link" href="{% url 'explore:explore_project' %}">Projects</a>
-                            <a class="nav-item nav-link" href="{% url 'explore:explore_users' %}">Creators</a>
-                            <a class="nav-item nav-link hidden" href="#">Tools</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Explore
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'explore:explore_project' %}">Projects</a>
+                                    <a class="dropdown-item" href="{% url 'explore:explore_users' %}">Creators</a>
+                                </div>
+                            </li>
                         </div>
                         <form class="form-inline" method="post">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                                    name="search_user">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search_project">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </div>
@@ -50,6 +55,7 @@
             </div>
         </div>
     </div>
+    
     <!-- end of explore navbar  -->
 
 
